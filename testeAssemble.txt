@@ -1,0 +1,18 @@
+.globl f1
+f1:
+    pushq %rbp
+    movq %rsp, %rbp
+    leave
+    ret
+.globl f2
+f2:
+    pushq %rbp
+    movq %rsp, %rbp
+    leave
+    ret
+.globl f3
+f3:
+    pushq %rbp
+    movq %rsp, %rbp
+    leave
+    ret
