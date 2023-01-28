@@ -26,6 +26,7 @@ void remove_newline(char *ptr)
 typedef struct Pilhas{
     char def;
     char tipo;
+    int numero;
     int posi;
     int tam_vet;
     int *var;
@@ -52,6 +53,8 @@ int main()
     Pilha p1[10];
     int i_pilha = 0;
     int tam_pilha = 0;
+
+    int i = 0;
 
     FILE *arq;
     arq = fopen("testeAssemble.txt", "w");
@@ -80,57 +83,63 @@ int main()
             i_pilha = 1;
             tam_pilha = 8;
 
-            p1[0].def = 'P';
+            p1[0].def = 'p';
             p1[0].tipo = par_t[0];
+            p1[0].numero = par_i[0];
             p1[0].posi = - tam_pilha;
-            printf("Definição: %c\n", p1[0].def);
-            printf("Tipo: %c\n", p1[0].tipo);
-            printf("Posição: %d\n", p1[0].posi);
+            //printf("Definição: %c\n", p1[0].def);
+            //printf("Tipo: %c\n", p1[0].tipo);
+            //printf("Posição: %d\n", p1[0].posi);
         }
 
         if (r==5){
             i_pilha = 2;
             tam_pilha = 16;
 
-            p1[0].def = 'P';
+            p1[0].def = 'p';
             p1[0].tipo = par_t[0];
-            p1[0].posi = - tam_pilha;
-            printf("Definição: %c\n", p1[0].def);
-            printf("Tipo: %c\n", p1[0].tipo);
-            printf("Posição: %d\n", p1[0].posi);
+            p1[0].numero = par_i[0];
+            p1[0].posi = - 8;
+            //printf("Definição: %c\n", p1[0].def);
+            //printf("Tipo: %c\n", p1[0].tipo);
+            //printf("Posição: %d\n", p1[0].posi);
 
-            p1[1].def = 'P';
+            p1[1].def = 'p';
             p1[1].tipo = par_t[1];
+            p1[1].numero = par_i[1];
             p1[1].posi = - tam_pilha;
-            printf("Definição: %c\n", p1[1].def);
-            printf("Tipo: %c\n", p1[1].tipo);
-            printf("Posição: %d\n", p1[1].posi);
+            //printf("Definição: %c\n", p1[1].def);
+            //printf("Tipo: %c\n", p1[1].tipo);
+            //printf("Posição: %d\n", p1[1].posi);
         }
 
         if (r==7){
             i_pilha = 3;
             tam_pilha = 24;
 
-            p1[0].def = 'P';
+            p1[0].def = 'p';
             p1[0].tipo = par_t[0];
-            p1[0].posi = - tam_pilha;
-            printf("Definição: %c\n", p1[0].def);
-            printf("Tipo: %c\n", p1[0].tipo);
-            printf("Posição: %d\n", p1[0].posi);
+            p1[0].numero = par_i[0];
+            p1[0].posi = - 8;
+            //printf("Definição: %c\n", p1[0].def);
+            //printf("Tipo: %c\n", p1[0].tipo);
+            //printf("Posição: %d\n", p1[0].posi);
 
-            p1[1].def = 'P';
+            p1[1].def = 'p';
             p1[1].tipo = par_t[1];
-            p1[1].posi = - tam_pilha;
-            printf("Definição: %c\n", p1[1].def);
-            printf("Tipo: %c\n", p1[1].tipo);
-            printf("Posição: %d\n", p1[1].posi);
+            p1[1].numero = par_i[1];
+            p1[1].posi = - 16;
+            //printf("Definição: %c\n", p1[1].def);
+            //printf("Tipo: %c\n", p1[1].tipo);
+            //printf("Posição: %d\n", p1[1].posi);
 
-            p1[2].def = 'P';
+            p1[2].def = 'p';
             p1[2].tipo = par_t[2];
+            p1[2].numero = par_i[2];
             p1[2].posi = - tam_pilha;
-            printf("Definição: %c\n", p1[2].def);
-            printf("Tipo: %c\n", p1[2].tipo);
-            printf("Posição: %d\n", p1[2].posi);
+            //printf("Definição: %c\n", p1[2].def);
+            //printf("Tipo: %c\n", p1[2].tipo);
+            //printf("Posição: %d\n", p1[2].posi);
         }
 
         //CABEÇALHO DAS FUNÇÕES
@@ -159,42 +168,67 @@ int main()
             
             if(strncmp(line, "var", 3) == 0){
                 r = sscanf(line, "var v%c%d", &var_t[var_cont], &var_i[var_cont]);
-                i_pilha = i_pilha + 1;
                 tam_pilha = tam_pilha + 4;
-                printf("Pilha: %d elementos / Tamanho %d\n", i_pilha, tam_pilha);
 
-                p1[i_pilha].def = 'V';
+                p1[i_pilha].def = 'v';
                 p1[i_pilha].tipo = var_t[var_cont];
+                p1[i_pilha].numero = var_i[var_cont];
                 p1[i_pilha].posi = - tam_pilha;
                 p1[i_pilha].tam_vet = 1;
-                printf("Definição: %c\n", p1[i_pilha].def);
-                printf("Tipo: %c\n", p1[i_pilha].tipo);
-                printf("Tamanho da variavel/vetor: %d\n", p1[i_pilha].tam_vet);
-                printf("Posição: %d\n", p1[i_pilha].posi);
+                //printf("Definição: %c\n", p1[i_pilha].def);
+                //printf("Tipo: %c\n", p1[i_pilha].tipo);
+                //printf("Tamanho da variavel/vetor: %d\n", p1[i_pilha].tam_vet);
+                //printf("Posição: %d\n", p1[i_pilha].posi);
+
+                i_pilha = i_pilha + 1;
+                //printf("Pilha: %d elementos / Tamanho %d\n", i_pilha, tam_pilha);
             }
 
             if(strncmp(line, "vet", 3) == 0){
                 r = sscanf(line, "vet v%c%d size ci%d", &var_t[var_cont], &var_i[var_cont], &var_const);
-                i_pilha = i_pilha + 1;
                 tam_pilha = tam_pilha + 4*var_const;
-                printf("Pilha: %d elementos / Tamanho %d\n", i_pilha, tam_pilha);
 
-                p1[i_pilha].def = 'V';
+                p1[i_pilha].def = 'v';
                 p1[i_pilha].tipo = var_t[var_cont];
+                p1[i_pilha].numero = var_i[var_cont];
                 p1[i_pilha].posi = - tam_pilha;
                 p1[i_pilha].tam_vet = var_const;
-                printf("Definição: %c\n", p1[i_pilha].def);
-                printf("Tipo: %c\n", p1[i_pilha].tipo);
-                printf("Tamanho da variavel/vetor: %d\n", p1[i_pilha].tam_vet);
-                printf("Posição: %d\n", p1[i_pilha].posi);
+                //printf("Definição: %c\n", p1[i_pilha].def);
+                //printf("Tipo: %c\n", p1[i_pilha].tipo);
+                //printf("Tamanho da variavel/vetor: %d\n", p1[i_pilha].tam_vet);
+                //printf("Posição: %d\n", p1[i_pilha].posi);
+
+                i_pilha = i_pilha + 1;
+                //printf("Pilha: %d elementos / Tamanho %d\n", i_pilha, tam_pilha);
+            }
+
+            //printf("Tam pilha: %d\n", i_pilha);
+
+            if(strcmp(line, "enddef") == 0){
+                for(i = 0; i < i_pilha; i++)
+                {
+                    printf("    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
+                    fprintf(arq, "    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
+                }
+
+                while(tam_pilha % 16 != 0)
+                    tam_pilha = tam_pilha + 4;
+
+                if(tam_pilha > 0){
+                    printf("    # rbx: %d\n", -tam_pilha);
+                    fprintf(arq, "    # rbx: %d\n", -tam_pilha);
+
+                    printf("    subq $%d, %%rsp\n", tam_pilha);
+                    fprintf(arq, "    subq $%d, %%rsp\n", tam_pilha);
+                }
+                
+                key = 0;
+                var_cont = 0;
+
+                continue;
             }
 
             var_cont++;
-
-            if(strcmp(line, "def") == 0){
-                key = 0;
-                var_cont = 0;
-            }
 
             continue;
         }        
