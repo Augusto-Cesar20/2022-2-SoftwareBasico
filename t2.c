@@ -94,9 +94,6 @@ int main()
             p1[0].tipo = par_t[0];
             p1[0].numero = par_i[0];
             p1[0].posi = - tam_pilha;
-            //printf("Definição: %c\n", p1[0].def);
-            //printf("Tipo: %c\n", p1[0].tipo);
-            //printf("Posição: %d\n", p1[0].posi);
         }
 
         if (r==5){
@@ -107,17 +104,11 @@ int main()
             p1[0].tipo = par_t[0];
             p1[0].numero = par_i[0];
             p1[0].posi = - 8;
-            //printf("Definição: %c\n", p1[0].def);
-            //printf("Tipo: %c\n", p1[0].tipo);
-            //printf("Posição: %d\n", p1[0].posi);
 
             p1[1].def = 'p';
             p1[1].tipo = par_t[1];
             p1[1].numero = par_i[1];
             p1[1].posi = - tam_pilha;
-            //printf("Definição: %c\n", p1[1].def);
-            //printf("Tipo: %c\n", p1[1].tipo);
-            //printf("Posição: %d\n", p1[1].posi);
         }
 
         if (r==7){
@@ -128,25 +119,16 @@ int main()
             p1[0].tipo = par_t[0];
             p1[0].numero = par_i[0];
             p1[0].posi = - 8;
-            //printf("Definição: %c\n", p1[0].def);
-            //printf("Tipo: %c\n", p1[0].tipo);
-            //printf("Posição: %d\n", p1[0].posi);
 
             p1[1].def = 'p';
             p1[1].tipo = par_t[1];
             p1[1].numero = par_i[1];
             p1[1].posi = - 16;
-            //printf("Definição: %c\n", p1[1].def);
-            //printf("Tipo: %c\n", p1[1].tipo);
-            //printf("Posição: %d\n", p1[1].posi);
 
             p1[2].def = 'p';
             p1[2].tipo = par_t[2];
             p1[2].numero = par_i[2];
             p1[2].posi = - tam_pilha;
-            //printf("Definição: %c\n", p1[2].def);
-            //printf("Tipo: %c\n", p1[2].tipo);
-            //printf("Posição: %d\n", p1[2].posi);
         }
 
         //CABEÇALHO DAS FUNÇÕES
@@ -182,13 +164,8 @@ int main()
                 p1[i_pilha].numero = var_i[var_cont];
                 p1[i_pilha].posi = - tam_pilha;
                 p1[i_pilha].tam_vet = 1;
-                //printf("Definição: %c\n", p1[i_pilha].def);
-                //printf("Tipo: %c\n", p1[i_pilha].tipo);
-                //printf("Tamanho da variavel/vetor: %d\n", p1[i_pilha].tam_vet);
-                //printf("Posição: %d\n", p1[i_pilha].posi);
 
                 i_pilha = i_pilha + 1;
-                //printf("Pilha: %d elementos / Tamanho %d\n", i_pilha, tam_pilha);
             }
 
             if(strncmp(line, "vet", 3) == 0){
@@ -200,21 +177,13 @@ int main()
                 p1[i_pilha].numero = var_i[var_cont];
                 p1[i_pilha].posi = - tam_pilha;
                 p1[i_pilha].tam_vet = var_const;
-                //printf("Definição: %c\n", p1[i_pilha].def);
-                //printf("Tipo: %c\n", p1[i_pilha].tipo);
-                //printf("Tamanho da variavel/vetor: %d\n", p1[i_pilha].tam_vet);
-                //printf("Posição: %d\n", p1[i_pilha].posi);
 
                 i_pilha = i_pilha + 1;
-                //printf("Pilha: %d elementos / Tamanho %d\n", i_pilha, tam_pilha);
             }
-
-            //printf("Tam pilha: %d\n", i_pilha);
 
             if(strcmp(line, "enddef") == 0){
                 for(i = 0; i < i_pilha; i++)
                 {
-                    //printf("DEF: %c / TIPO: %c / ID: %d / POSI: %d", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
                     if(p1[i].def != 'p'){
                         printf("    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
                         fprintf(arq, "    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
@@ -432,18 +401,18 @@ int main()
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    addl %%edi, %%ecx\n");
-                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                            printf("    subl %%edi, %%ecx\n");
+                            fprintf(arq, "    subl %%edi, %%ecx\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    addl %%esi, %%ecx\n");
-                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                            printf("    subl %%esi, %%ecx\n");
+                            fprintf(arq, "    subl %%esi, %%ecx\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    addl %%edc, %%ecx\n");
-                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                            printf("    subl %%edc, %%ecx\n");
+                            fprintf(arq, "    subl %%edx, %%ecx\n"); 
                         }
                     }
                 }
@@ -459,18 +428,18 @@ int main()
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    addl %%edi, %%ecx\n");
-                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                            printf("    imull %%edi, %%ecx\n");
+                            fprintf(arq, "    imull %%edi, %%ecx\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    addl %%esi, %%ecx\n");
-                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                            printf("    imull %%esi, %%ecx\n");
+                            fprintf(arq, "    imull %%esi, %%ecx\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    addl %%edc, %%ecx\n");
-                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                            printf("    imull %%edc, %%ecx\n");
+                            fprintf(arq, "    imull %%edx, %%ecx\n"); 
                         }
                     }
                 }
@@ -516,18 +485,18 @@ int main()
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    addl %%edi, %%ecx\n");
+                            printf("    subl %%edi, %%ecx\n");
                             fprintf(arq, "    addl %%edi, %%ecx\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    addl %%esi, %%ecx\n");
+                            printf("    subl %%esi, %%ecx\n");
                             fprintf(arq, "    addl %%esi, %%ecx\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    addl %%edc, %%ecx\n");
-                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                            printf("    subl %%edc, %%ecx\n");
+                            fprintf(arq, "    subl %%edx, %%ecx\n"); 
                         }
                     }
                 }
@@ -543,18 +512,18 @@ int main()
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    addl %%edi, %%ecx\n");
-                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                            printf("    imull %%edi, %%ecx\n");
+                            fprintf(arq, "    imull %%edi, %%ecx\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    addl %%esi, %%ecx\n");
-                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                            printf("    imull %%esi, %%ecx\n");
+                            fprintf(arq, "    imull %%esi, %%ecx\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    addl %%edc, %%ecx\n");
-                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                            printf("    imull %%edc, %%ecx\n");
+                            fprintf(arq, "    imull %%edx, %%ecx\n"); 
                         }
                     }
                 }
