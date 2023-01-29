@@ -79,13 +79,18 @@ int main()
         cont++;
         remove_newline(line);
         
+        //----------------------------------------------------------------------------------------------------------------------------------
+
         //DEFINIÇÃO DOS PARAMETROS NA PILHA
         r = sscanf(line, "function f%d p%c%d p%c%d p%c%d", &func_c, &par_t[0], &par_i[0], &par_t[1], &par_i[1], &par_t[2], &par_i[2]);
+
+        //Não tem parametro
         if (r==1){
             i_pilha = 0;
             tam_pilha = 0;
         }
 
+        //Tem um unico parametro
         if (r==3){
             i_pilha = 1;
             tam_pilha = 8;
@@ -96,6 +101,7 @@ int main()
             p1[0].posi = - tam_pilha;
         }
 
+        //Tem dois parametros
         if (r==5){
             i_pilha = 2;
             tam_pilha = 16;
@@ -111,6 +117,7 @@ int main()
             p1[1].posi = - tam_pilha;
         }
 
+        //Tem tres parametros
         if (r==7){
             i_pilha = 3;
             tam_pilha = 24;
@@ -139,6 +146,8 @@ int main()
             continue; // Sua utilização dentro de um laço faz com que a execução da instrução atual (ou bloco de instruções atual) seja interrompida e passa para a próxima iteração do laço.
         }
 
+        //----------------------------------------------------------------------------------------------------------------------------------
+
         //FINAL DAS FUNÇÕES
         if(strcmp(line, "end") == 0){
             printf("    leave\n    ret\n");
@@ -147,14 +156,18 @@ int main()
             continue;
         }
 
+        //----------------------------------------------------------------------------------------------------------------------------------
+
         //VARIAVEIS LOCAIS
+        //caso for def, utilizamos uma variavel auxiliar para ler os parametros até q seja encontrado o enddef
         if(strcmp(line, "def") == 0){
             key = 1;
             continue;
         }
 
+        //leitura dos parametros
         if(key == 1){
-            
+            //caso seja variavel inteira normal
             if(strncmp(line, "var", 3) == 0){
                 r = sscanf(line, "var v%c%d", &var_t[var_cont], &var_i[var_cont]);
                 tam_pilha = tam_pilha + 4;
@@ -168,6 +181,7 @@ int main()
                 i_pilha = i_pilha + 1;
             }
 
+            //caso seja um vetor
             if(strncmp(line, "vet", 3) == 0){
                 r = sscanf(line, "vet v%c%d size ci%d", &var_t[var_cont], &var_i[var_cont], &var_const);
                 tam_pilha = tam_pilha + 4*var_const;
@@ -181,9 +195,12 @@ int main()
                 i_pilha = i_pilha + 1;
             }
 
+            //caso seja enddef printamos a pilha e fazemos o subq
             if(strcmp(line, "enddef") == 0){
+                //passamos pelo vetor pilha printando sua possição
                 for(i = 0; i < i_pilha; i++)
                 {
+                    //se for p (parametro), printamos o registrador q ele está alocado
                     if(p1[i].def != 'p'){
                         printf("    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
                         fprintf(arq, "    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
@@ -205,9 +222,11 @@ int main()
                     }
                 }
 
+                //ajuste no subq para ser multiplo de 16
                 while(tam_pilha % 16 != 0)
                     tam_pilha = tam_pilha + 4;
 
+                //subq com o tamanho da pilha
                 if(tam_pilha > 0){
                     printf("    subq $%d, %%rsp\n", tam_pilha);
                     fprintf(arq, "    subq $%d, %%rsp\n", tam_pilha);
@@ -224,11 +243,15 @@ int main()
             continue;
         }        
 
+        //----------------------------------------------------------------------------------------------------------------------------------
+
         //CORPO DA FUNÇÃO
         //ATRIBUIÇÃO
         r = sscanf(line, "vi%d = %ci%d %c %ci%d", &atr_i0, &atr_top1, &atr_iop1, &atr_opa, &atr_top2, &atr_iop2);
 
+        //atribuição simples (o lado esquerdo recebe oq ta no lado direito)
         if(r == 3){
+            //Procura a variavel do lado esquerdo de uma atribuição na pilha
             for (i = 0; i < i_pilha; i++)
             {
                 if(p1[i].tipo == 'i'){
@@ -240,6 +263,7 @@ int main()
                 }
             }
 
+            //Procura a primeira variavel do lado direito da atribuição na pilha
             for (i = 0; i < i_pilha; i++)
             {
                 if(p1[i].tipo == 'i'){
@@ -260,7 +284,9 @@ int main()
                 }
             }
 
+            //se for um parametro utilizamos os registradores, caso contrario vamos atribuir o registrador r8d com a posição da variavel na pilha
             if(atr_top1 != 'p'){
+                //se for uma constante atribuimos o valor direto ao registrador, caso contrario pegamos a posição na pilha
                 if(atr_poso1 != 1){
                     printf("    movl %d(%%rbp), %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_poso1, atr_pos0);
                     fprintf(arq, "    movl %d(%%rbp), %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_poso1, atr_pos0); 
@@ -288,7 +314,9 @@ int main()
             continue;
         }
 
+        //Atribuição q envolve um operador (+, /, *, -)
         if(r == 6){
+            //Procura a variavel do lado esquerdo de uma atribuição na pilha
             for (i = 0; i < i_pilha; i++)
             {
                 if(p1[i].tipo == 'i'){
@@ -300,6 +328,7 @@ int main()
                 }
             }
 
+            //Procura a primeira variavel do lado direito da atribuição na pilha
             for (i = 0; i < i_pilha; i++)
             {
                 if(p1[i].tipo == 'i'){
@@ -321,6 +350,7 @@ int main()
                 }
             }
 
+            //Procura a segunda variavel do lado direito da atribuição na pilha
             for (i = 0; i < i_pilha; i++)
             {
                 if(p1[i].tipo == 'i'){
@@ -342,7 +372,9 @@ int main()
                 }
             }
 
+            //se o primeiro operador da direita for uma variavel, entramos nesse if. Caso ele seja uma constante, utilizamos  o else. //Dava para reduzir e muito o codigo aqui mas sem tempo irmão kkkkkk
             if(atr_poso1 != 1){
+                //se for um parametro utilizamos os registradores
                 if(atr_top1 != 'p'){
                     printf("    movl %d(%%rbp), %%r8d\n", atr_poso1);
                     fprintf(arq, "    movl %d(%%rbp), %%r8d\n", atr_poso1);
@@ -363,6 +395,7 @@ int main()
                     }
                 }
 
+                //adição
                 if(atr_opa == '+'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
@@ -390,6 +423,7 @@ int main()
                     }
                 }
 
+                //subtração
                 if(atr_opa == '-'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
@@ -417,6 +451,7 @@ int main()
                     }
                 }
 
+                //multiplicação
                 if(atr_opa == '*'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
@@ -444,6 +479,7 @@ int main()
                     }
                 }
 
+                //divisão
                 if(atr_opa == '/'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
@@ -587,6 +623,11 @@ int main()
             fprintf(arq, "    movl %%r8d, %d(%%rbp)\n", atr_pos0);
             continue;   
         }
+
+        //----------------------------------------------------------------------------------------------------------------------------------
+
+        //CHAMADA DE FUNÇÃO
+        
     }
 
     fclose(arq);
