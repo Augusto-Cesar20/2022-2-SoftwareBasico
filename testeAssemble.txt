@@ -1,18 +1,32 @@
-.globl f1
-f1:
-    pushq %rbp
-    movq %rsp, %rbp
-    leave
-    ret
-.globl f2
-f2:
-    pushq %rbp
-    movq %rsp, %rbp
-    leave
-    ret
+.section.rodata
+.data
+
+.text
+
 .globl f3
 f3:
     pushq %rbp
     movq %rsp, %rbp
+    # rdi: -8
+    # rsi: -16
+    # va1: -56
+    # va2: -136
+    # vi3: -140
+    subq $144, %rsp
+    movl $2, %ecx
+    addl %esi, %ecx
+    movl %ecx, -140(%rbp)
+    movl $2, %ecx
+    addl $2, %ecx
+    movl %ecx, -140(%rbp)
+    movl -140(%rbp), %ecx
+    addl $2, %ecx
+    movl %ecx, -140(%rbp)
+    movl %esi, %ecx
+    addl $2, %ecx
+    movl %ecx, -140(%rbp)
+    movl %esi, %ecx
+    addl %esi, %ecx
+    movl %ecx, -140(%rbp)
     leave
     ret

@@ -214,8 +214,26 @@ int main()
             if(strcmp(line, "enddef") == 0){
                 for(i = 0; i < i_pilha; i++)
                 {
-                    printf("    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
-                    fprintf(arq, "    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
+                    //printf("DEF: %c / TIPO: %c / ID: %d / POSI: %d", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
+                    if(p1[i].def != 'p'){
+                        printf("    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
+                        fprintf(arq, "    # %c%c%d: %d\n", p1[i].def, p1[i].tipo, p1[i].numero, p1[i].posi);
+                    } else {
+                        if(p1[i].numero == 1){
+                            printf("    # rdi: %d\n",  p1[i].posi);
+                            fprintf(arq, "    # rdi: %d\n", p1[i].posi);
+                        }
+
+                        if(p1[i].numero == 2){
+                            printf("    # rsi: %d\n",  p1[i].posi);
+                            fprintf(arq, "    # rsi: %d\n", p1[i].posi);
+                        }
+
+                        if(p1[i].numero == 3){
+                            printf("    # rdx: %d\n",  p1[i].posi);
+                            fprintf(arq, "    # rdx: %d\n", p1[i].posi);
+                        }
+                    }
                 }
 
                 while(tam_pilha % 16 != 0)
@@ -244,19 +262,33 @@ int main()
         if(r == 3){
             for (i = 0; i < i_pilha; i++)
             {
-                if(p1[i].numero == atr_i0 && p1[i].def == 'v'){
-                    atr_pos0 = p1[i].posi;
-                }
+                if(p1[i].tipo == 'i'){
 
-                if(atr_top1 != 'p'){
-                    if(atr_top1 == 'c'){
-                        atr_poso1 = 1;
+                    if(p1[i].numero == atr_i0 && p1[i].def == 'v'){
+                        atr_pos0 = p1[i].posi;
+                        break;
                     }
-                    if(p1[i].numero == atr_iop1 && p1[i].def == atr_top1){
-                        atr_poso1 = p1[i].posi;
+                }
+            }
+
+            for (i = 0; i < i_pilha; i++)
+            {
+                if(p1[i].tipo == 'i'){
+
+                    if(atr_top1 != 'p'){
+                        if(atr_top1 == 'c'){
+                            atr_poso1 = 1;
+                            break;
+                        }
+                        if(p1[i].numero == atr_iop1 && p1[i].def == atr_top1){
+                            atr_poso1 = p1[i].posi;
+                            break;
+                        }
+                    } else {
+                        atr_poso1 = 2;
+                        break;
                     }
-                } else
-                    atr_poso1 = 1;
+                }
             }
 
             if(atr_top1 != 'p'){
@@ -290,29 +322,55 @@ int main()
         if(r == 6){
             for (i = 0; i < i_pilha; i++)
             {
-                if(p1[i].numero == atr_i0 && p1[i].def == 'v'){
-                    atr_pos0 = p1[i].posi;
+                if(p1[i].tipo == 'i'){
+
+                    if(p1[i].numero == atr_i0 && p1[i].def == 'v'){
+                        atr_pos0 = p1[i].posi;
+                        break;
+                    }
                 }
+            }
 
-                if(atr_top1 != 'p'){
-                    if(atr_top1 == 'c'){
-                        atr_poso1 = 1;
-                    }
-                    if(p1[i].numero == atr_iop1 && p1[i].def == atr_top1){
-                        atr_poso1 = p1[i].posi;
-                    }
-                } else
-                    atr_poso1 = 2;
+            for (i = 0; i < i_pilha; i++)
+            {
+                if(p1[i].tipo == 'i'){
 
-                if(atr_top2 != 'p'){
-                    if(atr_top2 == 'c'){
-                        atr_poso2 = 1;
+                    if(atr_top1 != 'p'){
+
+                        if(atr_top1 == 'c'){
+                            atr_poso1 = 1;
+                            break;
+                        }
+                        if(p1[i].numero == atr_iop1 && p1[i].def == atr_top1){
+                            atr_poso1 = p1[i].posi;
+                            break;
+                        }
+                    } else {
+                        atr_poso1 = 2;
+                        break;
                     }
-                    if(p1[i].numero == atr_iop2 && p1[i].def == atr_top2){
-                        atr_poso2 = p1[i].posi;
+                }
+            }
+
+            for (i = 0; i < i_pilha; i++)
+            {
+                if(p1[i].tipo == 'i'){
+
+                    if(atr_top2 != 'p'){
+
+                        if(atr_top2 == 'c'){
+                            atr_poso2 = 1;
+                            break;
+                        }
+                        if(p1[i].numero == atr_iop2 && p1[i].def == atr_top2){
+                            atr_poso2 = p1[i].posi;
+                            break;
+                        }
+                    } else {
+                        atr_poso2 = 2;
+                        break;
                     }
-                } else
-                    atr_poso2 = 2;
+                }
             }
 
             if(atr_poso1 != 1){
@@ -337,7 +395,7 @@ int main()
                 }
 
                 if(atr_opa == '+'){
-                    if(atr_top1 != 'p'){
+                    if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
                             printf("    addl %d(%%rbp), %%ecx\n", atr_poso2);
                             fprintf(arq, "    addl %d(%%rbp), %%ecx\n", atr_poso2);
@@ -364,7 +422,7 @@ int main()
                 }
 
                 if(atr_opa == '-'){
-                    if(atr_top1 != 'p'){
+                    if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
                             printf("    subl %d(%%rbp), %%ecx\n", atr_poso2);
                             fprintf(arq, "    subl %d(%%rbp), %%ecx\n", atr_poso2);
@@ -391,7 +449,7 @@ int main()
                 }
 
                 if(atr_opa == '*'){
-                    if(atr_top1 != 'p'){
+                    if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
                             printf("    imull %d(%%rbp), %%ecx\n", atr_poso2);
                             fprintf(arq, "    imull %d(%%rbp), %%ecx\n", atr_poso2);
@@ -421,7 +479,7 @@ int main()
                 fprintf(arq, "    movl $%d, %%ecx\n", atr_iop1);
 
                 if(atr_opa == '+'){
-                    if(atr_top1 != 'p'){
+                    if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
                             printf("    addl %d(%%rbp), %%ecx\n", atr_poso2);
                             fprintf(arq, "    addl %d(%%rbp), %%ecx\n", atr_poso2);
@@ -448,7 +506,7 @@ int main()
                 }
 
                 if(atr_opa == '-'){
-                    if(atr_top1 != 'p'){
+                    if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
                             printf("    subl %d(%%rbp), %%ecx\n", atr_poso2);
                             fprintf(arq, "    subl %d(%%rbp), %%ecx\n", atr_poso2);
@@ -475,7 +533,7 @@ int main()
                 }
 
                 if(atr_opa == '*'){
-                    if(atr_top1 != 'p'){
+                    if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
                             printf("    imull %d(%%rbp), %%ecx\n", atr_poso2);
                             fprintf(arq, "    imull %d(%%rbp), %%ecx\n", atr_poso2);
