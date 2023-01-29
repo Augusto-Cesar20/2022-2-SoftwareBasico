@@ -262,26 +262,26 @@ int main()
 
             if(atr_top1 != 'p'){
                 if(atr_poso1 != 1){
-                    printf("    movl %d(%%rbp), %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_poso1, atr_pos0);
-                    fprintf(arq, "    movl %d(%%rbp), %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_poso1, atr_pos0); 
+                    printf("    movl %d(%%rbp), %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_poso1, atr_pos0);
+                    fprintf(arq, "    movl %d(%%rbp), %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_poso1, atr_pos0); 
                 } else {
                     printf("    movl $%d, %d(%%rbp)\n", atr_iop1, atr_pos0);
                     fprintf(arq, "    movl $%d, %d(%%rbp)\n", atr_iop1, atr_pos0);
                 }
             } else {
                 if (atr_iop1 == 1){
-                    printf("    movl %%edi, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0);
-                    fprintf(arq, "    movl %%edi, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0); 
+                    printf("    movl %%edi, %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_pos0);
+                    fprintf(arq, "    movl %%edi, %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_pos0); 
                 }
 
                 if (atr_iop1 == 2){
-                    printf("    movl %%esi, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0);
-                    fprintf(arq, "    movl %%esi, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0); 
+                    printf("    movl %%esi, %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_pos0);
+                    fprintf(arq, "    movl %%esi, %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_pos0); 
                 }
 
                 if (atr_iop1 == 3){
-                    printf("    movl %%edx, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0);
-                    fprintf(arq, "    movl %%edx, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0); 
+                    printf("    movl %%edx, %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_pos0);
+                    fprintf(arq, "    movl %%edx, %%r8d\n    movl %%r8d, %d(%%rbp)\n", atr_pos0); 
                 }
             }
 
@@ -344,48 +344,48 @@ int main()
 
             if(atr_poso1 != 1){
                 if(atr_top1 != 'p'){
-                    printf("    movl %d(%%rbp), %%ecx\n", atr_poso1);
-                    fprintf(arq, "    movl %d(%%rbp), %%ecx\n", atr_poso1);
+                    printf("    movl %d(%%rbp), %%r8d\n", atr_poso1);
+                    fprintf(arq, "    movl %d(%%rbp), %%r8d\n", atr_poso1);
                 }else{
                     if (atr_iop1 == 1){
-                        printf("    movl %%edi, %%ecx\n");
-                        fprintf(arq, "    movl %%edi, %%ecx\n"); 
+                        printf("    movl %%edi, %%r8d\n");
+                        fprintf(arq, "    movl %%edi, %%r8d\n"); 
                     }
 
                     if (atr_iop1 == 2){
-                        printf("    movl %%esi, %%ecx\n");
-                        fprintf(arq, "    movl %%esi, %%ecx\n"); 
+                        printf("    movl %%esi, %%r8d\n");
+                        fprintf(arq, "    movl %%esi, %%r8d\n"); 
                     }
 
                     if (atr_iop1 == 3){
-                        printf("    movl %%edc, %%ecx\n");
-                        fprintf(arq, "    movl %%edx, %%ecx\n"); 
+                        printf("    movl %%edc, %%r8d\n");
+                        fprintf(arq, "    movl %%edx, %%r8d\n"); 
                     }
                 }
 
                 if(atr_opa == '+'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
-                            printf("    addl %d(%%rbp), %%ecx\n", atr_poso2);
-                            fprintf(arq, "    addl %d(%%rbp), %%ecx\n", atr_poso2);
+                            printf("    addl %d(%%rbp), %%r8d\n", atr_poso2);
+                            fprintf(arq, "    addl %d(%%rbp), %%r8d\n", atr_poso2);
                         }else{
-                            printf("    addl $%d, %%ecx\n", atr_iop2);
-                            fprintf(arq, "    addl $%d, %%ecx\n", atr_iop2);
+                            printf("    addl $%d, %%r8d\n", atr_iop2);
+                            fprintf(arq, "    addl $%d, %%r8d\n", atr_iop2);
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    addl %%edi, %%ecx\n");
-                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                            printf("    addl %%edi, %%r8d\n");
+                            fprintf(arq, "    addl %%edi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    addl %%esi, %%ecx\n");
-                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                            printf("    addl %%esi, %%r8d\n");
+                            fprintf(arq, "    addl %%esi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    addl %%edc, %%ecx\n");
-                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                            printf("    addl %%edc, %%r8d\n");
+                            fprintf(arq, "    addl %%edx, %%r8d\n"); 
                         }
                     }
                 }
@@ -393,26 +393,26 @@ int main()
                 if(atr_opa == '-'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
-                            printf("    subl %d(%%rbp), %%ecx\n", atr_poso2);
-                            fprintf(arq, "    subl %d(%%rbp), %%ecx\n", atr_poso2);
+                            printf("    subl %d(%%rbp), %%r8d\n", atr_poso2);
+                            fprintf(arq, "    subl %d(%%rbp), %%r8d\n", atr_poso2);
                         }else{
-                            printf("    subl $%d, %%ecx\n", atr_iop2);
-                            fprintf(arq, "    subl $%d, %%ecx\n", atr_iop2);
+                            printf("    subl $%d, %%r8d\n", atr_iop2);
+                            fprintf(arq, "    subl $%d, %%r8d\n", atr_iop2);
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    subl %%edi, %%ecx\n");
-                            fprintf(arq, "    subl %%edi, %%ecx\n"); 
+                            printf("    subl %%edi, %%r8d\n");
+                            fprintf(arq, "    subl %%edi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    subl %%esi, %%ecx\n");
-                            fprintf(arq, "    subl %%esi, %%ecx\n"); 
+                            printf("    subl %%esi, %%r8d\n");
+                            fprintf(arq, "    subl %%esi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    subl %%edc, %%ecx\n");
-                            fprintf(arq, "    subl %%edx, %%ecx\n"); 
+                            printf("    subl %%edc, %%r8d\n");
+                            fprintf(arq, "    subl %%edx, %%r8d\n"); 
                         }
                     }
                 }
@@ -420,56 +420,83 @@ int main()
                 if(atr_opa == '*'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
-                            printf("    imull %d(%%rbp), %%ecx\n", atr_poso2);
-                            fprintf(arq, "    imull %d(%%rbp), %%ecx\n", atr_poso2);
+                            printf("    imull %d(%%rbp), %%r8d\n", atr_poso2);
+                            fprintf(arq, "    imull %d(%%rbp), %%r8d\n", atr_poso2);
                         }else{
-                            printf("    imull $%d, %%ecx\n", atr_iop2);
-                            fprintf(arq, "    imull $%d, %%ecx\n", atr_iop2);
+                            printf("    imull $%d, %%r8d\n", atr_iop2);
+                            fprintf(arq, "    imull $%d, %%r8d\n", atr_iop2);
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    imull %%edi, %%ecx\n");
-                            fprintf(arq, "    imull %%edi, %%ecx\n"); 
+                            printf("    imull %%edi, %%r8d\n");
+                            fprintf(arq, "    imull %%edi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    imull %%esi, %%ecx\n");
-                            fprintf(arq, "    imull %%esi, %%ecx\n"); 
+                            printf("    imull %%esi, %%r8d\n");
+                            fprintf(arq, "    imull %%esi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    imull %%edc, %%ecx\n");
-                            fprintf(arq, "    imull %%edx, %%ecx\n"); 
+                            printf("    imull %%edc, %%r8d\n");
+                            fprintf(arq, "    imull %%edx, %%r8d\n"); 
+                        }
+                    }
+                }
+
+                if(atr_opa == '/'){
+                    if(atr_top2 != 'p'){
+                        if(atr_poso2 != 1){
+                            printf("    movl %d(%%rbp), %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n", atr_poso2);
+                            fprintf(arq, "    movl %d(%%rbp), %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n", atr_poso2);
+                        }else{
+                            printf("    movl $%d, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n", atr_iop2);
+                            fprintf(arq, "    movl $%d, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n", atr_iop2);
+                        }
+                    } else {
+                        if (atr_iop2 == 1){
+                            printf("    movl %%edi, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                            fprintf(arq, "    movl %%edi, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                        }
+
+                        if (atr_iop2 == 2){
+                            printf("    movl %%esi, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                            fprintf(arq, "    movl %%esi, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                        }
+
+                        if (atr_iop2 == 3){
+                            printf("    movl %%edx, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                            fprintf(arq, "    movl %%edx, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
                         }
                     }
                 }
             } else {
-                printf("    movl $%d, %%ecx\n", atr_iop1);
-                fprintf(arq, "    movl $%d, %%ecx\n", atr_iop1);
+                printf("    movl $%d, %%r8d\n", atr_iop1);
+                fprintf(arq, "    movl $%d, %%r8d\n", atr_iop1);
 
                 if(atr_opa == '+'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
-                            printf("    addl %d(%%rbp), %%ecx\n", atr_poso2);
-                            fprintf(arq, "    addl %d(%%rbp), %%ecx\n", atr_poso2);
+                            printf("    addl %d(%%rbp), %%r8d\n", atr_poso2);
+                            fprintf(arq, "    addl %d(%%rbp), %%r8d\n", atr_poso2);
                         }else{
-                            printf("    addl $%d, %%ecx\n", atr_iop2);
-                            fprintf(arq, "    addl $%d, %%ecx\n", atr_iop2);
+                            printf("    addl $%d, %%r8d\n", atr_iop2);
+                            fprintf(arq, "    addl $%d, %%r8d\n", atr_iop2);
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    addl %%edi, %%ecx\n");
-                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                            printf("    addl %%edi, %%r8d\n");
+                            fprintf(arq, "    addl %%edi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    addl %%esi, %%ecx\n");
-                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                            printf("    addl %%esi, %%r8d\n");
+                            fprintf(arq, "    addl %%esi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    addl %%edc, %%ecx\n");
-                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                            printf("    addl %%edc, %%r8d\n");
+                            fprintf(arq, "    addl %%edx, %%r8d\n"); 
                         }
                     }
                 }
@@ -477,26 +504,26 @@ int main()
                 if(atr_opa == '-'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
-                            printf("    subl %d(%%rbp), %%ecx\n", atr_poso2);
-                            fprintf(arq, "    subl %d(%%rbp), %%ecx\n", atr_poso2);
+                            printf("    subl %d(%%rbp), %%r8d\n", atr_poso2);
+                            fprintf(arq, "    subl %d(%%rbp), %%r8d\n", atr_poso2);
                         }else{
-                            printf("    subl $%d, %%ecx\n", atr_iop2);
-                            fprintf(arq, "    subl $%d, %%ecx\n", atr_iop2);
+                            printf("    subl $%d, %%r8d\n", atr_iop2);
+                            fprintf(arq, "    subl $%d, %%r8d\n", atr_iop2);
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    subl %%edi, %%ecx\n");
-                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                            printf("    subl %%edi, %%r8d\n");
+                            fprintf(arq, "    addl %%edi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    subl %%esi, %%ecx\n");
-                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                            printf("    subl %%esi, %%r8d\n");
+                            fprintf(arq, "    addl %%esi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    subl %%edc, %%ecx\n");
-                            fprintf(arq, "    subl %%edx, %%ecx\n"); 
+                            printf("    subl %%edc, %%r8d\n");
+                            fprintf(arq, "    subl %%edx, %%r8d\n"); 
                         }
                     }
                 }
@@ -504,33 +531,60 @@ int main()
                 if(atr_opa == '*'){
                     if(atr_top2 != 'p'){
                         if(atr_poso2 != 1){
-                            printf("    imull %d(%%rbp), %%ecx\n", atr_poso2);
-                            fprintf(arq, "    imull %d(%%rbp), %%ecx\n", atr_poso2);
+                            printf("    imull %d(%%rbp), %%r8d\n", atr_poso2);
+                            fprintf(arq, "    imull %d(%%rbp), %%r8d\n", atr_poso2);
                         }else{
-                            printf("    imull $%d, %%ecx\n", atr_iop2);
-                            fprintf(arq, "    imull $%d, %%ecx\n", atr_iop2);
+                            printf("    imull $%d, %%r8d\n", atr_iop2);
+                            fprintf(arq, "    imull $%d, %%r8d\n", atr_iop2);
                         }
                     } else {
                         if (atr_iop2 == 1){
-                            printf("    imull %%edi, %%ecx\n");
-                            fprintf(arq, "    imull %%edi, %%ecx\n"); 
+                            printf("    imull %%edi, %%r8d\n");
+                            fprintf(arq, "    imull %%edi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 2){
-                            printf("    imull %%esi, %%ecx\n");
-                            fprintf(arq, "    imull %%esi, %%ecx\n"); 
+                            printf("    imull %%esi, %%r8d\n");
+                            fprintf(arq, "    imull %%esi, %%r8d\n"); 
                         }
 
                         if (atr_iop2 == 3){
-                            printf("    imull %%edc, %%ecx\n");
-                            fprintf(arq, "    imull %%edx, %%ecx\n"); 
+                            printf("    imull %%edc, %%r8d\n");
+                            fprintf(arq, "    imull %%edx, %%r8d\n"); 
+                        }
+                    }
+                }
+
+                if(atr_opa == '/'){
+                    if(atr_top2 != 'p'){
+                        if(atr_poso2 != 1){
+                            printf("    movl %d(%%rbp), %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n", atr_poso2);
+                            fprintf(arq, "    movl %d(%%rbp), %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n", atr_poso2);
+                        }else{
+                            printf("    movl $%d, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n", atr_iop2);
+                            fprintf(arq, "    movl $%d, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n", atr_iop2);
+                        }
+                    } else {
+                        if (atr_iop2 == 1){
+                            printf("    movl %%edi, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                            fprintf(arq, "    movl %%edi, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                        }
+
+                        if (atr_iop2 == 2){
+                            printf("    movl %%esi, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                            fprintf(arq, "    movl %%esi, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                        }
+
+                        if (atr_iop2 == 3){
+                            printf("    movl %%edx, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
+                            fprintf(arq, "    movl %%edx, %%ecx\n    cltd\n    idivl %%ecx\n    movl %%eax, %%r8d\n");
                         }
                     }
                 }
             }
                 
-            printf("    movl %%ecx, %d(%%rbp)\n", atr_pos0);
-            fprintf(arq, "    movl %%ecx, %d(%%rbp)\n", atr_pos0);
+            printf("    movl %%r8d, %d(%%rbp)\n", atr_pos0);
+            fprintf(arq, "    movl %%r8d, %d(%%rbp)\n", atr_pos0);
             continue;   
         }
     }
