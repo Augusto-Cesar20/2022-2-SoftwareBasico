@@ -24,12 +24,12 @@ void remove_newline(char *ptr)
 //###############################################################
 
 typedef struct Pilhas{
-    char def;
-    char tipo;
-    int numero;
-    int posi;
-    int tam_vet;
-    int *var;
+    char def; // armazena a definição de uma variavel [p = Parametro / v = Variavel (vetor ou variavel inteira)]
+    char tipo; // armazena o tipo de uma variavel [a = Array / i = Inteiro]
+    int numero; // armazena o indice da variavel ou parametro 
+    int posi; // armazena a posição na pilha q a variavel ou parametro vai ocupar [%rbp]
+    int tam_vet; // armazena um possivel tamanho do vetor (se for apenas um inteiro recebe somente 1)
+    int *var; // armazena o valor q vai ficar na variavel
 }Pilha;
 
 
@@ -46,17 +46,24 @@ int main()
 
     int var_i[5]; // Armazena os indices das variaveis
     char var_t[5]; // Armazena os tipos das variaveis [i = INTEIRO / a = VETOR(array)]
-    int var_cont = 0;
-    int key = 0;
-    int var_const;
+    int var_cont = 0; // variavel auxiliar para indicar a posição dos indices ou dos tipos do vetor de variaveis [var_i / var_t]
+    int key = 0; // Variavel auxiliar para indicar a entrada em uma definição de variaveis
+    int var_const; // armazena o valor de uma constante (exemplo: atribução da quantidade de elementos do vetor)
 
-    Pilha p1[10];
-    int i_pilha = 0;
-    int tam_pilha = 0;
+    Pilha p1[10]; // vetor da struct pilha
+    int i_pilha = 0; // armazena o indice q o vetor pilha está
+    int tam_pilha = 0; // armazena o tamanho da pilha
 
     int i = 0;
 
-    FILE *arq;
+    int atr_i0; // armazenar o indice da variavel que recebe alguma atribuição
+    int atr_iop1, atr_iop2; // armazenar o indice das variaveis q vão realizar uma operação ou armazena o valor da constante
+    char atr_top1, atr_top2; // armazenar os tipos das variaveis q vão realizar uma operação
+    char atr_opa; // armazena o operador (* / - +) 
+    int atr_pos0; // armazena a posição da pilha q a variavel vai receber na operação
+    int atr_poso1, atr_poso2; // armazena a posição da pilha das variaveis q vão realizar a operação
+
+    FILE *arq; // usado para escrever em um arquivo, facilitando a visualização dos testes
     arq = fopen("testeAssemble.txt", "w");
     //Testando a abertura do arquivo
     if (arq == NULL){
@@ -215,9 +222,6 @@ int main()
                     tam_pilha = tam_pilha + 4;
 
                 if(tam_pilha > 0){
-                    printf("    # rbx: %d\n", -tam_pilha);
-                    fprintf(arq, "    # rbx: %d\n", -tam_pilha);
-
                     printf("    subq $%d, %%rsp\n", tam_pilha);
                     fprintf(arq, "    subq $%d, %%rsp\n", tam_pilha);
                 }
@@ -234,7 +238,274 @@ int main()
         }        
 
         //CORPO DA FUNÇÃO
+        //ATRIBUIÇÃO
+        r = sscanf(line, "vi%d = %ci%d %c %ci%d", &atr_i0, &atr_top1, &atr_iop1, &atr_opa, &atr_top2, &atr_iop2);
 
+        if(r == 3){
+            for (i = 0; i < i_pilha; i++)
+            {
+                if(p1[i].numero == atr_i0 && p1[i].def == 'v'){
+                    atr_pos0 = p1[i].posi;
+                }
+
+                if(atr_top1 != 'p'){
+                    if(atr_top1 == 'c'){
+                        atr_poso1 = 1;
+                    }
+                    if(p1[i].numero == atr_iop1 && p1[i].def == atr_top1){
+                        atr_poso1 = p1[i].posi;
+                    }
+                } else
+                    atr_poso1 = 1;
+            }
+
+            if(atr_top1 != 'p'){
+                if(atr_poso1 != 1){
+                    printf("    movl %d(%%rbp), %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_poso1, atr_pos0);
+                    fprintf(arq, "    movl %d(%%rbp), %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_poso1, atr_pos0); 
+                } else {
+                    printf("    movl $%d, %d(%%rbp)\n", atr_iop1, atr_pos0);
+                    fprintf(arq, "    movl $%d, %d(%%rbp)\n", atr_iop1, atr_pos0);
+                }
+            } else {
+                if (atr_iop1 == 1){
+                    printf("    movl %%edi, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0);
+                    fprintf(arq, "    movl %%edi, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0); 
+                }
+
+                if (atr_iop1 == 2){
+                    printf("    movl %%esi, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0);
+                    fprintf(arq, "    movl %%esi, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0); 
+                }
+
+                if (atr_iop1 == 3){
+                    printf("    movl %%edx, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0);
+                    fprintf(arq, "    movl %%edx, %%ecx\n    movl %%ecx, %d(%%rbp)\n", atr_pos0); 
+                }
+            }
+
+            continue;
+        }
+
+        if(r == 6){
+            for (i = 0; i < i_pilha; i++)
+            {
+                if(p1[i].numero == atr_i0 && p1[i].def == 'v'){
+                    atr_pos0 = p1[i].posi;
+                }
+
+                if(atr_top1 != 'p'){
+                    if(atr_top1 == 'c'){
+                        atr_poso1 = 1;
+                    }
+                    if(p1[i].numero == atr_iop1 && p1[i].def == atr_top1){
+                        atr_poso1 = p1[i].posi;
+                    }
+                } else
+                    atr_poso1 = 2;
+
+                if(atr_top2 != 'p'){
+                    if(atr_top2 == 'c'){
+                        atr_poso2 = 1;
+                    }
+                    if(p1[i].numero == atr_iop2 && p1[i].def == atr_top2){
+                        atr_poso2 = p1[i].posi;
+                    }
+                } else
+                    atr_poso2 = 2;
+            }
+
+            if(atr_poso1 != 1){
+                if(atr_top1 != 'p'){
+                    printf("    movl %d(%%rbp), %%ecx\n", atr_poso1);
+                    fprintf(arq, "    movl %d(%%rbp), %%ecx\n", atr_poso1);
+                }else{
+                    if (atr_iop1 == 1){
+                        printf("    movl %%edi, %%ecx\n");
+                        fprintf(arq, "    movl %%edi, %%ecx\n"); 
+                    }
+
+                    if (atr_iop1 == 2){
+                        printf("    movl %%esi, %%ecx\n");
+                        fprintf(arq, "    movl %%esi, %%ecx\n"); 
+                    }
+
+                    if (atr_iop1 == 3){
+                        printf("    movl %%edc, %%ecx\n");
+                        fprintf(arq, "    movl %%edx, %%ecx\n"); 
+                    }
+                }
+
+                if(atr_opa == '+'){
+                    if(atr_top1 != 'p'){
+                        if(atr_poso2 != 1){
+                            printf("    addl %d(%%rbp), %%ecx\n", atr_poso2);
+                            fprintf(arq, "    addl %d(%%rbp), %%ecx\n", atr_poso2);
+                        }else{
+                            printf("    addl $%d, %%ecx\n", atr_iop2);
+                            fprintf(arq, "    addl $%d, %%ecx\n", atr_iop2);
+                        }
+                    } else {
+                        if (atr_iop2 == 1){
+                            printf("    addl %%edi, %%ecx\n");
+                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 2){
+                            printf("    addl %%esi, %%ecx\n");
+                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 3){
+                            printf("    addl %%edc, %%ecx\n");
+                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                        }
+                    }
+                }
+
+                if(atr_opa == '-'){
+                    if(atr_top1 != 'p'){
+                        if(atr_poso2 != 1){
+                            printf("    subl %d(%%rbp), %%ecx\n", atr_poso2);
+                            fprintf(arq, "    subl %d(%%rbp), %%ecx\n", atr_poso2);
+                        }else{
+                            printf("    subl $%d, %%ecx\n", atr_iop2);
+                            fprintf(arq, "    subl $%d, %%ecx\n", atr_iop2);
+                        }
+                    } else {
+                        if (atr_iop2 == 1){
+                            printf("    addl %%edi, %%ecx\n");
+                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 2){
+                            printf("    addl %%esi, %%ecx\n");
+                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 3){
+                            printf("    addl %%edc, %%ecx\n");
+                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                        }
+                    }
+                }
+
+                if(atr_opa == '*'){
+                    if(atr_top1 != 'p'){
+                        if(atr_poso2 != 1){
+                            printf("    imull %d(%%rbp), %%ecx\n", atr_poso2);
+                            fprintf(arq, "    imull %d(%%rbp), %%ecx\n", atr_poso2);
+                        }else{
+                            printf("    imull $%d, %%ecx\n", atr_iop2);
+                            fprintf(arq, "    imull $%d, %%ecx\n", atr_iop2);
+                        }
+                    } else {
+                        if (atr_iop2 == 1){
+                            printf("    addl %%edi, %%ecx\n");
+                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 2){
+                            printf("    addl %%esi, %%ecx\n");
+                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 3){
+                            printf("    addl %%edc, %%ecx\n");
+                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                        }
+                    }
+                }
+            } else {
+                printf("    movl $%d, %%ecx\n", atr_iop1);
+                fprintf(arq, "    movl $%d, %%ecx\n", atr_iop1);
+
+                if(atr_opa == '+'){
+                    if(atr_top1 != 'p'){
+                        if(atr_poso2 != 1){
+                            printf("    addl %d(%%rbp), %%ecx\n", atr_poso2);
+                            fprintf(arq, "    addl %d(%%rbp), %%ecx\n", atr_poso2);
+                        }else{
+                            printf("    addl $%d, %%ecx\n", atr_iop2);
+                            fprintf(arq, "    addl $%d, %%ecx\n", atr_iop2);
+                        }
+                    } else {
+                        if (atr_iop2 == 1){
+                            printf("    addl %%edi, %%ecx\n");
+                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 2){
+                            printf("    addl %%esi, %%ecx\n");
+                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 3){
+                            printf("    addl %%edc, %%ecx\n");
+                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                        }
+                    }
+                }
+
+                if(atr_opa == '-'){
+                    if(atr_top1 != 'p'){
+                        if(atr_poso2 != 1){
+                            printf("    subl %d(%%rbp), %%ecx\n", atr_poso2);
+                            fprintf(arq, "    subl %d(%%rbp), %%ecx\n", atr_poso2);
+                        }else{
+                            printf("    subl $%d, %%ecx\n", atr_iop2);
+                            fprintf(arq, "    subl $%d, %%ecx\n", atr_iop2);
+                        }
+                    } else {
+                        if (atr_iop2 == 1){
+                            printf("    addl %%edi, %%ecx\n");
+                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 2){
+                            printf("    addl %%esi, %%ecx\n");
+                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 3){
+                            printf("    addl %%edc, %%ecx\n");
+                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                        }
+                    }
+                }
+
+                if(atr_opa == '*'){
+                    if(atr_top1 != 'p'){
+                        if(atr_poso2 != 1){
+                            printf("    imull %d(%%rbp), %%ecx\n", atr_poso2);
+                            fprintf(arq, "    imull %d(%%rbp), %%ecx\n", atr_poso2);
+                        }else{
+                            printf("    imull $%d, %%ecx\n", atr_iop2);
+                            fprintf(arq, "    imull $%d, %%ecx\n", atr_iop2);
+                        }
+                    } else {
+                        if (atr_iop2 == 1){
+                            printf("    addl %%edi, %%ecx\n");
+                            fprintf(arq, "    addl %%edi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 2){
+                            printf("    addl %%esi, %%ecx\n");
+                            fprintf(arq, "    addl %%esi, %%ecx\n"); 
+                        }
+
+                        if (atr_iop2 == 3){
+                            printf("    addl %%edc, %%ecx\n");
+                            fprintf(arq, "    addl %%edx, %%ecx\n"); 
+                        }
+                    }
+                }
+            }
+                
+            printf("    movl %%ecx, %d(%%rbp)\n", atr_pos0);
+            fprintf(arq, "    movl %%ecx, %d(%%rbp)\n", atr_pos0);
+            continue;   
+        }
     }
 
     fclose(arq);
