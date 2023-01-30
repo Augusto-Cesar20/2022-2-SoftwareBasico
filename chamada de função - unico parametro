@@ -1,0 +1,82 @@
+        //CHAMADA DE FUNÇÃO
+
+        r = sscanf(line, "vi%d = call f%d %c%c%d %c%c%d %c%c%d", &ch_iv0, &ch_ifunc, &ch_dp1, &ch_tp1, &ch_ip1, &ch_dp2, &ch_tp2, &ch_ip2, &ch_dp3, &ch_tp3, &ch_ip3);
+        if(r == 5){
+            if(par_qtd == 1){
+                printf("    movq %%rdi, -8(%%rbp)\n");
+                fprintf(arq, "    movq %%rdi, -8(%%rbp)\n");
+            }
+
+            if(par_qtd == 2){
+                printf("    movq %%rdi, -8(%%rbp)\n    movq %%rsi, -16(%%rbp)\n");
+                fprintf(arq, "    movq %%rdi, -8(%%rbp)\n    movq %%rsi, -16(%%rbp)\n");
+            }
+
+            if(par_qtd == 3){
+                printf("    movq %%rdi, -8(%%rbp)\n    movq %%rsi, -16(%%rbp)\n    movq %%rdx, -24(%%rbp)\n");
+                fprintf(arq, "    movq %%rdi, -8(%%rbp)\n    movq %%rsi, -16(%%rbp)\n    movq %%rdx, -24(%%rbp)\n");
+            }
+
+            if(ch_dp1 != 'c'){
+                if(ch_dp1 != 'p'){
+                    for (i = 0; i < i_pilha; i++)
+                    {
+                        if(p1[i].def == ch_dp1 && p1[i].tipo == ch_tp1 && p1[i].numero == ch_ip1){
+                            ch_pos1 = p1[i].posi;
+                            break;
+                        }
+                    }
+                    if(ch_tp1 == 'a'){
+                        printf("    leaq %d(%%rbp), %%rdi\n", ch_pos1);
+                        fprintf(arq, "    leaq %d(%%rbp), %%rdi\n", ch_pos1);
+                    } else {
+                        printf("    movq %d(%%rbp), %%rdi\n", ch_pos1);
+                        fprintf(arq, "    movq %d(%%rbp), %%rdi\n", ch_pos1);
+                    }
+                } else {
+                    if (ch_ip1 == 2){
+                        printf("    movl %%rsi, %%rdi\n");
+                        fprintf(arq, "    movl %%rsi, %%rdi\n");
+                    }
+
+                    if (ch_ip1 == 3){
+                        printf("    movl %%rdx, %%rdi\n");
+                        fprintf(arq, "    movl %%rdx, %%rdi\n");
+                    }
+                }
+            } else {   
+                printf("    movl $%d, %%rdi\n ", ch_ip1);
+                fprintf(arq, "    movl $%d, %%rdi\n", ch_ip1);
+            }
+
+            printf("    movl $0, %%eax\n    call f%d\n", ch_ifunc);
+            fprintf(arq, "    movl $0, %%eax\n    call f%d\n", ch_ifunc);
+
+            if(par_qtd == 1){
+                printf("    movq -8(%%rbp), %%rdi\n");
+                fprintf(arq, "    movq -8(%%rbp), %%rdi\n");
+            }
+
+            if(par_qtd == 2){
+                printf("    movq -8(%%rbp), %%rdi\n    movq -16(%%rbp), %%rsi\n");
+                fprintf(arq, "    movq -8(%%rbp), %%rdi\n    movq -16(%%rbp), %%rsi\n");
+            }
+
+            if(par_qtd == 3){
+                printf("    movq -8(%%rbp), %%rdi\n    movq -16(%%rbp), %%rsi\n    movq -24(%%rbp), %%rdx\n");
+                fprintf(arq, "    movq -8(%%rbp), %%rdi\n    movq -16(%%rbp), %%rsi\n    movq -24(%%rbp), %%rdx\n");
+            }
+
+            for (i = 0; i < i_pilha; i++)
+            {
+                if(p1[i].def == 'v' && p1[i].tipo == 'i' && p1[i].numero == ch_iv0){
+                    ch_pos0 = p1[i].posi;
+                    break;
+                }
+            }
+
+            printf("    movl %%eax, %d(%%rbp)\n", ch_pos0);
+            fprintf(arq, "    movl %%eax, %d(%%rbp)\n", ch_pos0);
+
+            continue;
+        }
