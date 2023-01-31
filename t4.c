@@ -53,6 +53,7 @@ int main()
     Pilha p1[10]; // vetor da struct pilha
     int i_pilha = 0; // armazena o indice q o vetor pilha está
     int tam_pilha = 0; // armazena o tamanho da pilha
+    int par_qtd = 0;
 
     int i = 0;
 
@@ -99,12 +100,14 @@ int main()
         if (r==1){
             i_pilha = 0;
             tam_pilha = 0;
+            par_qtd = 0;
         }
 
         //Tem um unico parametro
         if (r==3){
             i_pilha = 1;
             tam_pilha = 8;
+            par_qtd = 1;
 
             p1[0].def = 'p';
             p1[0].tipo = par_t[0];
@@ -116,6 +119,7 @@ int main()
         if (r==5){
             i_pilha = 2;
             tam_pilha = 16;
+            par_qtd = 2;
 
             p1[0].def = 'p';
             p1[0].tipo = par_t[0];
@@ -132,6 +136,7 @@ int main()
         if (r==7){
             i_pilha = 3;
             tam_pilha = 24;
+            par_qtd = 3;
 
             p1[0].def = 'p';
             p1[0].tipo = par_t[0];
@@ -724,8 +729,10 @@ int main()
         //if com constante
         r = sscanf(line, "if ci%d", &var_const);
         if(r == 1){
-			    printf("cmpl $0, $%d\n", var_const);	
+			    printf("cmpl $0, $%d\n", var_const);
+                fprintf(arq, "cmpl $0, $%d\n", var_const);	
 			    printf("je end_if%d\n", contador_if);
+                fprintf(arq, "je end_if%d\n", contador_if);
 			    continue;
 		    }
 
@@ -734,7 +741,9 @@ int main()
         if (r == 2) {	
             if_pos--;
 			      printf("cmpl $0, %d(%%rbp)\n", p1[if_pos].posi);
+                  fprintf(arq, "cmpl $0, %d(%%rbp)\n", p1[if_pos].posi);
 			      printf("je end_if%d\n", contador_if);
+                  fprintf(arq, "je end_if%d\n", contador_if);
 			      continue;
 		    }   
 
@@ -750,7 +759,8 @@ int main()
         //retorno de constante
         r = sscanf(line, "return ci%d", &var_const);
         if(r == 1){
-			    printf("movl $%d, %%eax\n", var_const);
+			    printf("    movl $%d, %%eax\n", var_const);
+                fprintf(arq, "    movl $%d, %%eax\n", var_const);
 			    continue;
 		    }
         
@@ -759,6 +769,7 @@ int main()
         if(r == 2){
             ret_pos--;
             printf("movl %d(%%rbp), %%eax\n", p1[ret_pos].posi);
+            fprintf(arq, "    movl %d(%%rbp), %%eax\n", p1[ret_pos].posi);
         }
    }
 
