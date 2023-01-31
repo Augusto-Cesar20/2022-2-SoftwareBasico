@@ -723,6 +723,14 @@ int main()
 
             continue;
         }
+	    
+	if(r == 8){
+
+        }
+	    
+        if(r == 11){
+
+        }
 
         //CONDICIONAL
 
