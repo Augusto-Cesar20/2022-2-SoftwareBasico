@@ -782,18 +782,18 @@ int main()
             } else{
                 if(ret_pos == 1){
                     ret_pos--;
-                    printf("    movl %%rdi, %%eax\n", p1[ret_pos].posi);
-                    fprintf(arq, "    %%rdi, %%eax\n", p1[ret_pos].posi);
+                    printf("    movl %%rdi, %%eax\n");
+                    fprintf(arq, "    movl %%rdi, %%eax\n");
                 }
                 else if(ret_pos == 2){
                     ret_pos--;
-                    printf("    movl %%rsi, %%eax\n", p1[ret_pos].posi);
-                    fprintf(arq, "    %%rsi, %%eax\n", p1[ret_pos].posi);
+                    printf("    movl %%rsi, %%eax\n");
+                    fprintf(arq, "    movl %%rsi, %%eax\n");
                 }
                 else if(ret_pos == 3){
                     ret_pos--;
-                    printf("    movl %%rdx, %%eax\n", p1[ret_pos].posi);
-                    fprintf(arq, "    %%rdx, %%eax\n", p1[ret_pos].posi);
+                    printf("    movl %%rdx, %%eax\n");
+                    fprintf(arq, "  movl %%rdx, %%eax\n");
                 }
             }
         }
