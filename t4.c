@@ -729,40 +729,40 @@ int main()
         //if com constante
         r = sscanf(line, "if ci%d", &var_const);
         if(r == 1){
-			    printf("cmpl $0, $%d\n", var_const);
-                fprintf(arq, "cmpl $0, $%d\n", var_const);	
-			    printf("je end_if%d\n", contador_if);
-                fprintf(arq, "je end_if%d\n", contador_if);
-			    continue;
-		    }
+		printf("    cmpl $0, $%d\n", var_const);
+                fprintf(arq, "    cmpl $0, $%d\n", var_const);	
+		printf("    je end_if%d\n", contador_if);
+                fprintf(arq, "    je end_if%d\n", contador_if);
+		continue;
+	}
 
         //if com variavel ou parametro
         r = sscanf(line, "if %ci%d", &if_def, &if_pos);
         if (r == 2) {	
-            if_pos--;
-			      printf("cmpl $0, %d(%%rbp)\n", p1[if_pos].posi);
-                  fprintf(arq, "cmpl $0, %d(%%rbp)\n", p1[if_pos].posi);
-			      printf("je end_if%d\n", contador_if);
-                  fprintf(arq, "je end_if%d\n", contador_if);
-			      continue;
-		    }   
+        	if_pos--;
+		printf("    cmpl $0, %d(%%rbp)\n", p1[if_pos].posi);
+                fprintf(arq, "    cmpl $0, %d(%%rbp)\n", p1[if_pos].posi);
+		printf("    je end_if%d\n", contador_if);
+                fprintf(arq, "    je end_if%d\n", contador_if);
+		continue;
+	}   
 
         //endif
-	    	if (strncmp(line, "endif", 5) == 0) {
-			    printf("end_if%d:\n", contador_if);
-			    contador_if++;
-			    continue;
-		    }
+	if (strncmp(line, "endif", 5) == 0) {
+		printf("end_if%d:\n", contador_if);
+		contador_if++;
+		continue;
+	}
 
         //RETORNO
         
         //retorno de constante
         r = sscanf(line, "return ci%d", &var_const);
         if(r == 1){
-			    printf("    movl $%d, %%eax\n", var_const);
+		printf("    movl $%d, %%eax\n", var_const);
                 fprintf(arq, "    movl $%d, %%eax\n", var_const);
-			    continue;
-		    }
+		continue;
+	}
         
         //retorno parametro e variavel
         r = sscanf(line, "return %ci%d", &ret_def, &ret_pos);
