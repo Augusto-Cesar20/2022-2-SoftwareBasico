@@ -775,9 +775,27 @@ int main()
         //retorno parametro e variavel
         r = sscanf(line, "return %ci%d", &ret_def, &ret_pos);
         if(r == 2){
-            ret_pos--;
-            printf("    movl %d(%%rbp), %%eax\n", p1[ret_pos].posi);
-            fprintf(arq, "    movl %d(%%rbp), %%eax\n", p1[ret_pos].posi);
+            if(ret_def == 'v'){
+                ret_pos--;
+                printf("    movl %d(%%rbp), %%eax\n", p1[ret_pos].posi);
+                fprintf(arq, "    movl %d(%%rbp), %%eax\n", p1[ret_pos].posi);
+            } else{
+                if(ret_pos == 1){
+                    ret_pos--;
+                    printf("    movl %%rdi, %%eax\n", p1[ret_pos].posi);
+                    fprintf(arq, "    %%rdi, %%eax\n", p1[ret_pos].posi);
+                }
+                else if(ret_pos == 2){
+                    ret_pos--;
+                    printf("    movl %%rsi, %%eax\n", p1[ret_pos].posi);
+                    fprintf(arq, "    %%rsi, %%eax\n", p1[ret_pos].posi);
+                }
+                else if(ret_pos == 3){
+                    ret_pos--;
+                    printf("    movl %%rdx, %%eax\n", p1[ret_pos].posi);
+                    fprintf(arq, "    %%rdx, %%eax\n", p1[ret_pos].posi);
+                }
+            }
         }
    }
 
