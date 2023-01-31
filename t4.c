@@ -776,7 +776,7 @@ int main()
         r = sscanf(line, "return %ci%d", &ret_def, &ret_pos);
         if(r == 2){
             ret_pos--;
-            printf("movl %d(%%rbp), %%eax\n", p1[ret_pos].posi);
+            printf("    movl %d(%%rbp), %%eax\n", p1[ret_pos].posi);
             fprintf(arq, "    movl %d(%%rbp), %%eax\n", p1[ret_pos].posi);
         }
    }
