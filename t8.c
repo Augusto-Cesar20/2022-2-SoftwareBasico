@@ -1037,16 +1037,17 @@ int main()
         r = sscanf(line, "set %ca%d index ci%d with %ci%d", &set_def0, &set_i0, &set_const, &set_def1, &set_i1);
 
         if (r == 5) {
-			  //Operaçao com vetor//
-			    if(set_def0 == 'v') {
+        //Operaçao com vetor//
+	if(set_def0 == 'v') {
             for (i = 0; i < i_pilha; i++)
             {
-              if(p1[i].def == 'v' && p1[i].tipo == 'i' && p1[i].numero == set_i0){
+              if(p1[i].def == 'v' && p1[i].tipo == 'a' && p1[i].numero == set_i0){
                 set_pos = p1[i].posi;
                 break;
               }
             }
-				  printf("    leaq %d(%%rbp), %%r8\n", set_pos);
+		
+	  printf("    leaq %d(%%rbp), %%r8\n", set_pos);
           fprintf(arq, "    leaq %d(%%rbp), %%r8\n", set_pos);
 				
           if(set_def1 == 'c'){
